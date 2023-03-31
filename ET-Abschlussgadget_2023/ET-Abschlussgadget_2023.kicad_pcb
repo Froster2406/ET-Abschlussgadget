@@ -155,18 +155,26 @@
     (stroke (width 0.15) (type solid)) (layer "F.SilkS") (tstamp fa39364c-760a-4893-88fc-52da40d599fb))
   (gr_line (start 114.9 88.6) (end 118.6 88.6)
     (stroke (width 0.15) (type solid)) (layer "F.SilkS") (tstamp fe65be86-f636-4476-ba00-cae34abf9474))
-  (gr_line (start 185 80) (end 185 134)
+  (gr_arc (start 100 82) (mid 100.585786 80.585786) (end 102 80)
+    (stroke (width 0.1) (type default)) (layer "Edge.Cuts") (tstamp 1b018683-cc23-4497-8eb8-ec4b3fbb007b))
+  (gr_line (start 185 82) (end 185 132)
     (stroke (width 0.1) (type default)) (layer "Edge.Cuts") (tstamp 2863ad49-52d0-4fa2-b3f6-b75331fb8805))
-  (gr_line (start 100 80) (end 185 80)
+  (gr_arc (start 185 132) (mid 184.414214 133.414214) (end 183 134)
+    (stroke (width 0.1) (type default)) (layer "Edge.Cuts") (tstamp 400ff8a2-23f3-40cf-a23a-4302b62fa04e))
+  (gr_arc (start 102 134) (mid 100.585786 133.414214) (end 100 132)
+    (stroke (width 0.1) (type default)) (layer "Edge.Cuts") (tstamp 4293894f-7aaf-4adb-add4-89846795d1e3))
+  (gr_line (start 102 80) (end 183 80)
     (stroke (width 0.1) (type default)) (layer "Edge.Cuts") (tstamp 6f407fe1-8555-4597-9f77-f752f9efb33e))
-  (gr_line (start 185 134) (end 100 134)
+  (gr_line (start 183 134) (end 102 134)
     (stroke (width 0.1) (type default)) (layer "Edge.Cuts") (tstamp 73fddaa4-7f8d-4942-97d4-75012278562c))
-  (gr_line (start 100 134) (end 100 80)
+  (gr_line (start 100 132) (end 100 82)
     (stroke (width 0.1) (type default)) (layer "Edge.Cuts") (tstamp aa8ac303-d3f7-462c-b776-d4188a0a9d80))
+  (gr_arc (start 183 80) (mid 184.414214 80.585786) (end 185 82)
+    (stroke (width 0.1) (type default)) (layer "Edge.Cuts") (tstamp f9c2d8fd-9469-4cab-866f-040511525ee3))
   (image (at 55.75 107.3) (layer "F.SilkS")
     (data
       iVBORw0KGgoAAAANSUhEUgAAAgMAAAFLCAIAAADEWhicAAAAA3NCSVQICAjb4U/gAAAACXBIWXMA
-      ABcRAAAXEQHKJvM/AAAgAElEQVR4nOy9SZMkR3Ym+J6qLb7vEeEee2TkAiSQSKKqUDUFCNlNgqTM
+      ABcMAAAXDAGKAo5mAAAgAElEQVR4nOy9SZMkR3Ym+J6qLb7vEeEee2TkAiSQSKKqUDUFCNlNgqTM
       tAxlZk7kqaV5pbBlRObAA488kH9gDnPhdUamhOzpEQqnulkLWAWCtQEFIpGZyCX21d3D983czUz1
       zeGZmXtEokg2CyCAhD9JSYmwMFNTU1N7+/seaq0REQCIiH+ISIW0s7Pz05/+9P79+48fPx6NRrZt
       w5zmNKc5zenzSq7rSim3tra++c1vvv766xsbG6ZpGobBf32W2yMREdH091AqKKUODg7eeuut73zn
