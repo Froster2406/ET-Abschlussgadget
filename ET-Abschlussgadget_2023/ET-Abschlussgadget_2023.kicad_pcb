@@ -143,6 +143,24 @@
     (stroke (width 0.15) (type solid)) (layer "F.SilkS") (tstamp ceb15655-ae49-4f61-99a2-10cbc088f5be))
   (gr_line (start 113.625 95) (end 115.875 95)
     (stroke (width 0.15) (type default)) (layer "F.SilkS") (tstamp cf9d723a-f270-48dc-90ef-072bb90d4819))
+  (gr_poly
+    (pts
+      (xy 136.3 109)
+      (xy 165.1 109)
+      (xy 165.1 112)
+      (xy 136.3 112)
+    )
+
+    (stroke (width 0.15) (type solid)) (fill solid) (layer "F.SilkS") (tstamp d992f12c-670d-463f-8a74-66a7d85fa660))
+  (gr_poly
+    (pts
+      (xy 135.8 101)
+      (xy 164.6 101)
+      (xy 164.6 104)
+      (xy 135.8 104)
+    )
+
+    (stroke (width 0.15) (type solid)) (fill solid) (layer "F.SilkS") (tstamp df723221-bb27-4486-8ec9-31bb4536573f))
   (gr_line (start 116.175 88.525) (end 114.925 88.525)
     (stroke (width 0.15) (type default)) (layer "F.SilkS") (tstamp e0220bf4-52c9-46bd-99d7-c7e8a94e5fc0))
   (gr_line (start 117.1375 87.3625) (end 116.5 90.7)
@@ -1614,10 +1632,10 @@
       +c2cOTMkJMTPzw+GYQKBYCkKWLkC/Q+gfKO92htNPAAAAABJRU5ErkJggg==
     )
   )
-  (gr_text "uint16_t age = 1997;" (at 104 120) (layer "F.SilkS") (tstamp 2d9e0861-d968-4b5d-adaa-90979dc0ea96)
+  (gr_text "uint16_t avgAge = 25;" (at 104 120) (layer "F.SilkS") (tstamp 2d9e0861-d968-4b5d-adaa-90979dc0ea96)
     (effects (font (size 2 2) (thickness 0.3)) (justify left bottom))
   )
-  (gr_text "char last[] = {dblquote}Punkt{dblquote};" (at 104 104) (layer "F.SilkS") (tstamp 428d5f9c-dcd9-471a-9bf5-256ef941be93)
+  (gr_text "char lastName[] = {dblquote}                   {dblquote};" (at 104 104) (layer "F.SilkS") (tstamp 428d5f9c-dcd9-471a-9bf5-256ef941be93)
     (effects (font (size 2 2) (thickness 0.3)) (justify left bottom))
   )
   (gr_text "/* Vorname / Prénom / Nome / Prenum / First Name */" (at 104 115) (layer "F.SilkS") (tstamp 5850159c-5b38-4bf6-8cb7-f0179e33f616)
@@ -1644,7 +1662,7 @@
   (gr_text "/* Geburstdatum / Date de nassance / Data di nascita / Data de naschientscha / Date of birth */" (at 104 123) (layer "F.SilkS") (tstamp db1ab3c9-e8f2-4db4-8cd7-dbf8c5b50370)
     (effects (font (size 1 1) (thickness 0.2) bold) (justify left bottom))
   )
-  (gr_text "char first[] = {dblquote}PREN{dblquote};" (at 104 112) (layer "F.SilkS") (tstamp fc544674-1047-4e85-ac67-a5d8d249d050)
+  (gr_text "char firstName[] = {dblquote}                   {dblquote};" (at 104 112) (layer "F.SilkS") (tstamp fc544674-1047-4e85-ac67-a5d8d249d050)
     (effects (font (size 2 2) (thickness 0.3)) (justify left bottom))
   )
 
