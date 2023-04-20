@@ -18,6 +18,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include "tiny_lib.h"
+#include "TinyTouchLib.h"
 
 
 int main(void)
@@ -46,8 +47,17 @@ int main(void)
 	_delay_us(560);
 	*/
 	
+	tinytouch_init();
+	
 	while (1) 
     {
+		if (tinytouch_sense() == tt_push) {
+			led1On();
+			_delay_ms(200);
+			ledsOff();
+		}
+		
+		/*
 		// Blink 6 charlieplexed leds
 		// -----------------------------
 		led1On();
@@ -62,5 +72,6 @@ int main(void)
 		_delay_ms(200);
 		led6On();
 		_delay_ms(200);
+		*/
     }
 }
