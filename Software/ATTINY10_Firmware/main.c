@@ -20,6 +20,7 @@
 #include "tiny_lib.h"
 #include "TinyTouchLib.h"
 
+uint8_t irCmd[] = {0x76, 0xB5, 0xAA, 0xB5, 0xAD};
 
 int main(void)
 {
@@ -51,10 +52,32 @@ int main(void)
 	
 	while (1) 
     {
+		/*
+		// Capacitive touch sensor
+		// -----------------------------
 		if (tinytouch_sense() == tt_push) {
 			led1On();
 			_delay_ms(200);
 			ledsOff();
+		}
+		*/
+		
+		// Send ir command
+		// -----------------------------
+		for(uint8_t n = 0; n < 2; n++) {
+			for (uint8_t i = 0; i < sizeof(irCmd)/sizeof(irCmd[0]); i++) {
+				for (uint8_t j = 0; j < sizeof(irCmd[0]); j++) {
+					if (irCmd[i] & (1 << (7 - j))) {
+						led6On();
+						_delay_us(625);
+					}
+					else {
+						ledsOff();
+						_delay_us(625);
+					}
+				}
+			}
+			_delay_ms(25);
 		}
 		
 		/*
