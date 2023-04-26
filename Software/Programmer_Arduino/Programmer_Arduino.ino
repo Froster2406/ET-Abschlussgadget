@@ -52,9 +52,11 @@
  * thanks to pcm1723 for tpitest.pde upon which   *
  * this is based                                  *
  **************************************************/
- 
+  
 #include <SPI.h>
 #include "pins_arduino.h"
+
+#define SS 10
 
 // define the instruction set bytes
 #define SLD    0x20
@@ -93,10 +95,25 @@ uint8_t b, b1, b2, b3;
 boolean idChecked;
 
 void setup(){
+  pinMode(SS, OUTPUT);
+  digitalWrite(SS, HIGH);
+  
   // set up serial
   Serial.begin(115200); // you can change this if you want
-  //while(!Serial);
+  while(!Serial);
   Serial.println("Start");
+  Serial.print("SS: ");
+  Serial.println(SS);
+  Serial.print("MOSI: ");
+  Serial.println(MOSI);
+  Serial.print("MISO: ");
+  Serial.println(MISO);
+  Serial.print("SCK: ");
+  Serial.println(SCK);
+  pinMode(SS, OUTPUT);
+  pinMode(MOSI, OUTPUT);
+  pinMode(SCK, OUTPUT);
+  
   // set up SPI
   SPI.begin();
   SPI.setBitOrder(LSBFIRST);
@@ -112,11 +129,19 @@ void setup(){
   SPI.transfer(0xff); // while holding TPIDATA to "1"
   
   writeCSS(0x02, 0x04); // TPIPCR, guard time = 8bits (default=128)
+
+  Serial.println("CSS");
   
   send_skey(NVM_PROGRAM_ENABLE); // enable NVM interface
+  
+  Serial.println("SKEY");
   // wait for NVM to be enabled
+  /*while(1) {
+    SPI.transfer(0x55);
+  }*/
+  
   while((readCSS(0x00) & 0x02) < 1){
-    // wait
+    Serial.print(".");
   }
   Serial.println("NVM enabled");
   
@@ -485,8 +510,12 @@ void finish(){
   writeCSS(0x00, 0x00);
   SPI.transfer(0xff);
   SPI.transfer(0xff);
-  // digitalWrite(SS, HIGH); // release RESET
+  digitalWrite(SS, HIGH); // release RESET
   delay(1); // t_RST min = 400 ns @ Vcc = 5 V
+  pinMode(SS, INPUT);
+  pinMode(MOSI, INPUT);
+  pinMode(MISO, INPUT);
+  pinMode(SCK, INPUT);
 }
 
 void checkID(){

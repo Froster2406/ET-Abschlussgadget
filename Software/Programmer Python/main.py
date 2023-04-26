@@ -69,7 +69,7 @@ def print_logo():
                        / /_/ / /_/ / / / / / __    
                       / ____/ _, _/ /_/ / /_/ /    
                      /_/   /_/ |_|\____/\____/ V0.1
-                          By Felix Reee            
+                          By Felix Reeee           
                                                    
 """)
 
@@ -107,9 +107,9 @@ def print_com_ports():
         print('')
         print(f'Enter number from 0 to {len(ports) - 1}')
         in_str = input()
-        com_port = str(ports[int(in_str)])[:4]
+        com_port = str(ports[int(in_str)])[:5]
     else:
-        com_port = str(ports[0])[:4]
+        com_port = str(ports[0])[:5]
 
     return com_port
 
@@ -143,16 +143,20 @@ def read_firmware(firmware_file):
 
 
 def send_firmware(hex_data):
-    serial_write(b'R')
+    serial_write(b'P')
     time.sleep(0.05)
     for line in hex_data:
         serial_write(line)
+    time.sleep(0.1)
+    serial_write(b'R')
 
 
 def program_and_verify():
     global write_done
     global verify_done
     global verify_errors
+
+    time.sleep(5)
 
     # Program
     write_done = False
@@ -168,6 +172,8 @@ def program_and_verify():
         time.sleep(0.01)
     if verify_errors:
         print('VERIFY FOUND ERRORS!')
+    # else:
+    #     serial_write(b'F')
 
 
 if __name__ == '__main__':

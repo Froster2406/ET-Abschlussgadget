@@ -7,7 +7,7 @@
                                --| 2 (GND)      (VCC) 5 |--
                                  |                      |
                                  |                      |
- AIN1/ADC1/OC0B/PCINT1/QTouch  --| 3 (PB1)      (PB1) 4 |--  ADC2/PCINT2
+ AIN1/ADC1/OC0B/PCINT1/QTouch  --| 3 (PB1)      (PB2) 4 |--  ADC2/PCINT2
                                  +----------------------+
 
 */
@@ -48,10 +48,37 @@ int main(void)
 	_delay_us(560);
 	*/
 	
-	tinytouch_init();
+	//tinytouch_init();
+	
+	/*
+	DDRB = 1;                    // PB0 as an output
+	TCCR0A = 1<<COM0A0;          // Toggle OC0A
+	TCCR0B = 1<<WGM02 | 3<<CS00; // CTC mode and set prescaler to 64
+	OCR0A = 3905;                // Frequency 2Hz
+	while (1);
+	*/
+	
+	
+	CCP    = 0xD8;
+	CLKMSR = 0x00;
+	CCP    = 0xD8;
+	CLKPSR = 0X00;
+	
+	/*
+	DDRB = 0b1111;
+	PUEB = 0b0000;
+	PORTB = 0b0000;
+	*/
 	
 	while (1) 
     {
+		/*
+		PORTB = 0b0001;
+		_delay_ms(200);
+		PORTB = 0b0100;
+		_delay_ms(200);
+		*/
+		
 		/*
 		// Capacitive touch sensor
 		// -----------------------------
@@ -62,6 +89,7 @@ int main(void)
 		}
 		*/
 		
+		/*
 		// Send ir command
 		// -----------------------------
 		for(uint8_t n = 0; n < 2; n++) {
@@ -79,22 +107,23 @@ int main(void)
 			}
 			_delay_ms(25);
 		}
+		*/
 		
-		/*
+		#define DEL 100
+		
 		// Blink 6 charlieplexed leds
 		// -----------------------------
 		led1On();
-		_delay_ms(200);
+		_delay_ms(DEL);
 		led2On();
-		_delay_ms(200);
+		_delay_ms(DEL);
 		led3On();
-		_delay_ms(200);
+		_delay_ms(DEL);
 		led4On();
-		_delay_ms(200);
+		_delay_ms(DEL);
 		led5On();
-		_delay_ms(200);
+		_delay_ms(DEL);
 		led6On();
-		_delay_ms(200);
-		*/
+		_delay_ms(DEL);
     }
 }
