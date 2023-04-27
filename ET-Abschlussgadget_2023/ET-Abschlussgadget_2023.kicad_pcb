@@ -37706,7 +37706,7 @@
     (tstamp 83e9ecad-0832-4a6e-a789-a8b65cd87952)
     (at 127.9 98 90)
     (attr board_only exclude_from_pos_files exclude_from_bom)
-    (fp_text reference "G***" (at 0 0 90) (layer "B.SilkS")
+    (fp_text reference "G***" (at 0 0 90) (layer "B.SilkS") hide
         (effects (font (size 1.5 1.5) (thickness 0.3)) (justify mirror))
       (tstamp b3052c5c-d1b6-427f-9b37-2d9488aac472)
     )
