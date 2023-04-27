@@ -1,8 +1,7 @@
 Comment,Designator,Footprint,LCSC
 LED_Red,"D2,D3,D4,D5,D6",LED_SMD:LED_0603_1608Metric,C965799
 ON/OFF,SW1,easyeda2kicad:SW-TH_MSK12C02,C2681568
-590,"R1,R2,R3,R4,R6,R7",Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,C5140946
-590,R5,Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,C3016757
+590,"R1,R2,R3,R4,R5,R6,R7",Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,C5140946
 3V,BT1,easyeda2kicad:BAT-SMD_CR2032-3V,C70373
 ATtiny414-SS,U1,Package_SO:SOIC-14_3.9x8.7mm_P1.27mm,C189365
 100nF,C1,Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder,C38141
