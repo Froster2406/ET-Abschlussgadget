@@ -30,15 +30,15 @@
     <EraseKey />
     <AsfFrameworkConfig>
       <framework-data xmlns="">
-  <options />
-  <configurations />
-  <files />
-  <documentation help="" />
-  <offline-documentation help="" />
-  <dependencies>
-    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.52.0" />
-  </dependencies>
-</framework-data>
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <offline-documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.52.0" />
+        </dependencies>
+      </framework-data>
     </AsfFrameworkConfig>
     <avrtool>com.atmel.avrdbg.tool.simulator</avrtool>
     <avrtoolserialnumber />
@@ -136,14 +136,13 @@
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
-<<<<<<< HEAD
     <Compile Include="TinyTouchLib.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="TinyTouchLib.h">
-=======
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="tiny_lib.h">
->>>>>>> a43d235d7d40c71731b3edffa257fc5028332297
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

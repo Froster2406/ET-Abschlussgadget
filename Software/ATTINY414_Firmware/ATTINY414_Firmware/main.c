@@ -4,6 +4,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include "tiny_lib.h"
+#include "TinyTouchLib.h"
 
 uint8_t irCmd[] = {0x76, 0xB5, 0xAA, 0xB5, 0xAD};
 
