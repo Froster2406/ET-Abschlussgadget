@@ -18,6 +18,9 @@ enum {
 	tt_timeout
 };
 
+/* returns adc value */
+uint8_t tinytouch_adc(void);
+
 //////////////////////////////////////////////////////////////////////////
 //
 // User definable settings

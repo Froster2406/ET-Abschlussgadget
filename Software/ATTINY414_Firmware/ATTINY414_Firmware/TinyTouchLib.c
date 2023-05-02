@@ -3,12 +3,15 @@
  *
  * Created: 09.06.2013 17:25:47			-	v0.1 Initial release (ATtiny 10)
  *			10.06.2013					- 	v0.2 ported to ATtiny 25/45/85 and ATtiny13
+ *			02.05.2023					-	v0.3 Ported to ATtiny414
  *  Author: Tim (cpldcpu@gmail.com)
- */ 
+ *  Port by: Froster2406
+ */
 
  
 #include "TinyTouchLib.h"
 #include <util/delay.h>
+#include <stdint.h>
 
 // Internal function to read the adc input
 uint8_t tinytouch_adc(void);
@@ -24,12 +27,14 @@ uint8_t timer;
 */	
 
 void	tinytouch_init(void) {
+	//ADCSRA =_BV(ADEN)|_BV(ADPS2)|_BV(ADPS1); // Enable ADC, Set prescaler to 64
 	ADC0.CTRLA = 0b00000100; // enable ADC, disable run standby
 	ADC0.CTRLC = 0b01010101; // VDD reference, set prescaler to 64
 	bias=tinytouch_adc()<<8;
 	touch=0;
 }
 
+/* not needed, remove later */
 uint8_t tinytouch_sense(void) {
 	uint8_t i;
 	uint16_t tmp;
