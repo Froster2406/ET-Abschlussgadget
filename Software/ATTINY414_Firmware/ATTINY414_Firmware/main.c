@@ -15,27 +15,15 @@ uint8_t irCmd[] = {0x76, 0xB5, 0xAA, 0xB5, 0xAD};
 
 void pcbTest(void)
 {
-	    while (1)
-	    {
-		    #define DEL (100)
-		    
-		    // Blink 5 leds
-		    led1On();
-		    _delay_ms(DEL);
-		    led2On();
-		    _delay_ms(DEL);
-		    led3On();
-		    _delay_ms(DEL);
-		    led4On();
-		    _delay_ms(DEL);
-		    led5On();
-		    _delay_ms(DEL);
-		    ledsOff();
-		    _delay_ms(DEL);
-		    
-		    // Send command on ir led
-		    sendIrCommand(irCmd);
-	    }
+		// turn on all LEDs
+		led1On();
+		led2On();
+		led3On();
+		led4On();
+		led5On();
+		ledsOff();
+		ledIrOn();
+		_delay_ms(1000);
 }
 
 /* output data on PB0 */
@@ -50,6 +38,7 @@ void printADCValue(uint8_t value)
 		{	/* toggle pin OFF / LOW */
 			PORTB.OUTCLR |= 1;
 		}
+		_delay_ms(1);
 	}
 }
 
@@ -102,6 +91,8 @@ int main(void)
 	led4Init();
 	led5Init();
 	ledIrInit();
+	
+	tinytouch_init();
 	
 	pcbTest();
 	actualProgram();
