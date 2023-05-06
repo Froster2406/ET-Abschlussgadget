@@ -91,6 +91,7 @@
         </avrgcc.assembler.general.IncludePaths>
       </AvrGcc>
     </ToolchainSettings>
+    <PostBuildEvent>start "Programmer" /D "$(SolutionDir)" /WAIT program.bat</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <ToolchainSettings>

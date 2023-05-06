@@ -3,6 +3,7 @@ from pymcuprog.backend import SessionConfig, Backend
 import serial.tools.list_ports as list_ports
 from pathlib import Path
 import argparse
+import logging
 import sys
 import os
 
@@ -41,7 +42,27 @@ def check_file(file):
         raise SystemExit(1)
 
 
+class LogHandler(logging.Handler):
+    # Parse logger output and display status
+    def emit(self, record):
+        if 'Reading device ID...' in record.msg:
+            print('Reading device id...')
+        if 'Erase...' in record.msg:
+            print('Erasing...')
+        if 'Write...' in record.msg:
+            print('Writing...')
+        if ' bytes from flash...' in record.msg:
+            print('Verifying...')
+
+
 if __name__ == '__main__':
+    # Initialize logger with callback
+    logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
+    logger = logging.getLogger()
+    logger.propagate = False
+    logger.handlers.clear()
+    logger.addHandler(LogHandler())
+
     # Initialize argument parser
     parser = ArgParser()
     parser.add_argument("port", help='the com port of the programmer')
@@ -59,7 +80,7 @@ if __name__ == '__main__':
 
     # Set up programmer backend
     sessionconfig = SessionConfig("attiny414")
-    transport = ToolSerialConnection(serialport=com_port, baudrate=baudrate, timeout=1)
+    transport = ToolSerialConnection(serialport=com_port, baudrate=baudrate, timeout=0.05)
     backend = Backend()
     backend.connect_to_tool(transport)
 
