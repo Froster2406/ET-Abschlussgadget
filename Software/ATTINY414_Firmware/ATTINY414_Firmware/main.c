@@ -1,5 +1,5 @@
 // 10MHz
-#define F_CPU (10000000)
+#define F_CPU (1000000)
 #define NUMBEROFLEDS (6)
 #define VALUE1 (256 / NUMBEROFLEDS)
 #define VALUE2 (VALUE1 * 2)
@@ -14,16 +14,40 @@
 uint8_t irCmd[] = {0x76, 0xB5, 0xAA, 0xB5, 0xAD};
 
 void pcbTest(void)
-{
-		// turn on all LEDs
-		led1On();
-		led2On();
-		led3On();
-		led4On();
-		led5On();
-		ledsOff();
-		ledIrOn();
+{		
+	// turn on all LEDs
+	//led1On();
+	//led2On();
+	//led3On();
+	//led4On();
+	//led5On();
+	
+	// Send ir command
+	while(1){
+		for(uint8_t n = 0; n < 2; n++) {
+			for (uint8_t i = 0; i < sizeof(irCmd)/sizeof(irCmd[0]); i++) {
+				for (uint8_t j = 0; j < sizeof(irCmd[0]) * 8; j++) {
+					if (irCmd[i] & (1 << (7 - j))) {
+						for(uint8_t x = 0; x < 25; x++) {
+							ledIrOn();
+							_delay_us(40);
+							ledIrOff();
+							_delay_us(40);
+						}
+					}
+					else {
+						ledIrOff();
+						_delay_us(2050);
+					}
+				}
+			}
+			ledIrOff();
+			_delay_ms(82);
+		}
+		ledIrOff();
 		_delay_ms(1000);
+	}
+	_delay_ms(1000);
 }
 
 /* output data on PB0 */
@@ -92,9 +116,15 @@ int main(void)
 	led5Init();
 	ledIrInit();
 	
-	tinytouch_init();
+	// Set up frequency generator output
+	//TCA0.SINGLE.CTRLB = 0b00000001;
+	//TCA0.SINGLE.CTRLB |= 0b01110000;
+	//PORTB.DIRSET = 0b111;
+	//PORTB.OUTSET = 0b111;
+	//TCA0.SINGLE.CMP0 = 255;
+	
+	//tinytouch_init();
 	
 	pcbTest();
-	actualProgram();
-	
+	//actualProgram();
 }
