@@ -1,10 +1,10 @@
 // 10MHz
 #define F_CPU (1000000)
-#define NUMBEROFLEDS (6)
-#define VALUE1 (256 / NUMBEROFLEDS)
-#define VALUE2 (VALUE1 * 2)
-#define VALUE3 (VALUE2 * 3)
-#define VALUE4 (VALUE3 * 4)
+#define VALUE1 (300)
+#define VALUE2 (400)
+#define VALUE3 (500)
+#define VALUE4 (650)
+#define VALUE5 (800)
 
 #include <avr/io.h>
 #include <util/delay.h>
@@ -12,6 +12,7 @@
 #include "TinyTouchLib.h"
 
 uint8_t irCmd[] = {0x76, 0xB5, 0xAA, 0xB5, 0xAD};
+int16_t bias;
 
 void pcbTest(void)
 {		
@@ -46,17 +47,19 @@ void pcbTest(void)
 	_delay_ms(1000);
 }
 
-/* output data on PB0 */
+// output data on PB0 (J1)
 void printADCValue(uint8_t value)
 {
-	PORTB.DIRSET |= 1; /* configure pin as output */
+	// configure pin as output
+	PORTB.DIRSET = 0b1;
 	for(uint8_t i = 0; i < 8; i++){
-		if((value >> i) & 1)
-		{	/* toggle pin ON / HIGH */
-			PORTB.OUTSET |= 1;
-		} else 
-		{	/* toggle pin OFF / LOW */
-			PORTB.OUTCLR |= 1;
+		if((value >> i) & 1) {
+			// toggle pin ON / HIGH
+			PORTB.OUTSET = 0b1;
+		}
+		else {
+			// toggle pin OFF / LOW
+			PORTB.OUTCLR = 0b1;
 		}
 		_delay_ms(1);
 	}
@@ -64,38 +67,35 @@ void printADCValue(uint8_t value)
 
 void actualProgram(void)
 {
-	uint8_t value = 0;
 	for(;;)
 	{
-		value = tinytouch_adc();
-		printADCValue(value);
-		if (value < VALUE1){
-			led1On();
-		} else if (value < VALUE2)
-		{
-			led1On();
-			led2On();
-		} else if (value < VALUE3)
-		{
-			led1On();
-			led2On();
-			led3On();
-		} else if (value < VALUE4)
-		{
-			led1On();
-			led2On();
-			led3On();
-			led4On();
-		} else
-		{
-			led1On();
-			led2On();
-			led3On();
-			led4On();
+		// average 16 samples
+		int16_t tmp = 0;
+		for (uint8_t i = 0; i < 16; i++) {
+			tmp += tinytouch_adc();
+			_delay_us(100);
+		}
+
+		int32_t delta = bias - tmp;
+		
+		printADCValue(delta);
+		ledsOff();
+		if (delta > VALUE1) {
 			led5On();
+		}
+		if (delta > VALUE2) {
+			led4On();
+		}
+		if (delta > VALUE3) {
+			led3On();
+		}
+		if (delta > VALUE4) {
+			led2On();
+		}
+		if (delta > VALUE5)	{
+			led1On();
 			sendIrCommand(irCmd);
 		}
-		
 	}
 }
 
@@ -113,7 +113,7 @@ int main(void)
 	ledIrInit();
 	
 	// Set up frequency generator output
-	TCA0.SINGLE.CTRLB = 0b01000001;
+	TCA0.SINGLE.CTRLB = 0b00000001;
 	// Set top value for 38kHz square wave
 	TCA0.SINGLE.CMP0 = 43;
 	// Set PTB2 as output
@@ -121,10 +121,16 @@ int main(void)
 	// Enable tca0
 	TCA0.SINGLE.CTRLA = 0b1;
 	
-	//tinytouch_init();
+	// Initialize touch lib
+	tinytouch_init();
+	bias = 0;
+	for (uint8_t i = 0; i < 16; i++) {
+		bias += tinytouch_adc();
+		_delay_us(100);
+	}
 	
-	pcbTest();
-	//actualProgram();
+	//pcbTest();
+	actualProgram();
 	
 	while (1) {
 		
