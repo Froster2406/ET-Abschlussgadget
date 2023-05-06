@@ -16,11 +16,11 @@ uint8_t irCmd[] = {0x76, 0xB5, 0xAA, 0xB5, 0xAD};
 void pcbTest(void)
 {		
 	// turn on all LEDs
-	//led1On();
-	//led2On();
-	//led3On();
-	//led4On();
-	//led5On();
+	led1On();
+	led2On();
+	led3On();
+	led4On();
+	led5On();
 	
 	// Send ir command
 	while(1){
@@ -28,23 +28,19 @@ void pcbTest(void)
 			for (uint8_t i = 0; i < sizeof(irCmd)/sizeof(irCmd[0]); i++) {
 				for (uint8_t j = 0; j < sizeof(irCmd[0]) * 8; j++) {
 					if (irCmd[i] & (1 << (7 - j))) {
-						for(uint8_t x = 0; x < 25; x++) {
-							ledIrOn();
-							_delay_us(40);
-							ledIrOff();
-							_delay_us(40);
-						}
+						TCA0.SINGLE.CTRLB = 0b01000001;
+						_delay_us(2050);
 					}
 					else {
-						ledIrOff();
+						TCA0.SINGLE.CTRLB = 0b00000001;
 						_delay_us(2050);
 					}
 				}
 			}
-			ledIrOff();
+			TCA0.SINGLE.CTRLB = 0b00000001;
 			_delay_ms(82);
 		}
-		ledIrOff();
+		TCA0.SINGLE.CTRLB = 0b00000001;
 		_delay_ms(1000);
 	}
 	_delay_ms(1000);
@@ -117,14 +113,20 @@ int main(void)
 	ledIrInit();
 	
 	// Set up frequency generator output
-	//TCA0.SINGLE.CTRLB = 0b00000001;
-	//TCA0.SINGLE.CTRLB |= 0b01110000;
-	//PORTB.DIRSET = 0b111;
-	//PORTB.OUTSET = 0b111;
-	//TCA0.SINGLE.CMP0 = 255;
+	TCA0.SINGLE.CTRLB = 0b01000001;
+	// Set top value for 38kHz square wave
+	TCA0.SINGLE.CMP0 = 43;
+	// Set PTB2 as output
+	PORTB.DIRSET = 0b001;
+	// Enable tca0
+	TCA0.SINGLE.CTRLA = 0b1;
 	
 	//tinytouch_init();
 	
 	pcbTest();
 	//actualProgram();
+	
+	while (1) {
+		
+	}
 }
