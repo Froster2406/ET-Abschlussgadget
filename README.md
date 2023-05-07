@@ -16,7 +16,7 @@ You deem yourself a true engineer? Great!<br>
 Tag along as we dive deeper into how you can reprogram the microcontroller. <br>
 
 ## general information
-* [Reference Manual](https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/ATtiny212-214-412-414-416-DataSheet-DS40002287A.pd)
+* [Reference Manual](https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/ATtiny212-214-412-414-416-DataSheet-DS40002287A.pdf)
 * There are two pins (J1 & J2) on the side of the PCB than can be freely addressed, without interfering with the main functionality of the board
 
 
