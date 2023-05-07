@@ -1,10 +1,11 @@
 // 10MHz
 #define F_CPU (1000000)
-#define VALUE1 (1300)
-#define VALUE2 (1400)
-#define VALUE3 (1500)
-#define VALUE4 (1650)
-#define VALUE5 (1800)
+#define VALUE1 (990)
+#define VALUE2 (970)
+#define VALUE3 (950)
+#define VALUE4 (920)
+#define VALUE5 (880)
+#define FILTER_ALPHA (0.2)
 
 #include <avr/io.h>
 #include <util/delay.h>
@@ -13,6 +14,7 @@
 
 uint8_t irCmd[] = {0x76, 0xB5, 0xAA, 0xB5, 0xAD};
 uint16_t bias;
+uint16_t prevDelta;
 
 void pcbTest(void)
 {		
@@ -115,26 +117,29 @@ void actualProgram(void)
 		
 		// Subtract bias from measured value
 		uint16_t delta = bias - tmp;
+		delta = prevDelta * (1 - FILTER_ALPHA) + delta * FILTER_ALPHA;
 		serialPrint(delta);
 		
 		// Turn on corresponding leds
 		ledsOff();
-		if (delta > VALUE1) {
+		if (delta < VALUE1) {
 			led5On();
 		}
-		if (delta > VALUE2) {
+		if (delta < VALUE2) {
 			led4On();
 		}
-		if (delta > VALUE3) {
+		if (delta < VALUE3) {
 			led3On();
 		}
-		if (delta > VALUE4) {
+		if (delta < VALUE4) {
 			led2On();
 		}
-		if (delta > VALUE5)	{
+		if (delta < VALUE5)	{
 			led1On();
 			sendIrCommand(irCmd);
 		}
+		
+		prevDelta = delta;
 	}
 }
 
