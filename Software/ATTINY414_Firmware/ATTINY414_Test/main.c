@@ -17,15 +17,6 @@ int main(void)
 	led5Init();
 	ledIrInit();
 	
-	// Set up frequency generator output
-	TCA0.SINGLE.CTRLB = 0b00000001;
-	// Set top value for 38kHz square wave
-	TCA0.SINGLE.CMP0 = 42;
-	// Set PTB2 as output
-	PORTB.DIRSET = 0b001;
-	// Enable tca0
-	TCA0.SINGLE.CTRLA = 0b1;
-	
 	// Turn on all LEDs
 	led1On();
 	led2On();
@@ -35,9 +26,9 @@ int main(void)
 	
 	// Test ir led
 	while(1){
-		TCA0.SINGLE.CTRLB = 0b01000001;
+		ledIrOn();
 		_delay_ms(82);
-		TCA0.SINGLE.CTRLB = 0b00000001;
+		ledIrOff();
 		_delay_ms(82);
 	}
 }

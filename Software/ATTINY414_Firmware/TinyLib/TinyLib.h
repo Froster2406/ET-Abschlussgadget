@@ -9,17 +9,24 @@
 
 // Set led Ir pin as output
 void ledIrInit() {
+	// Set up frequency generator output
+	TCA0.SINGLE.CTRLB = 0b00000001;
+	// Set top value for 38kHz square wave
+	TCA0.SINGLE.CMP0 = 42;
+	// Set PTB2 as output
 	PORTB.DIRSET = 0b0100;
+	// Enable tca0
+	TCA0.SINGLE.CTRLA = 0b1;
 }
 
 // Turn led Ir on
 void ledIrOn() {
-	PORTB.OUTSET = 0b0100;
+	TCA0.SINGLE.CTRLB = 0b01000001;
 }
 
 // Turn led Ir off
 void ledIrOff() {
-	PORTB.OUTCLR = 0b0100;
+	TCA0.SINGLE.CTRLB = 0b00000001;
 }
 
 // Set led 1 pin as output
@@ -107,18 +114,19 @@ void ledsOff() {
 void sendIrCommand(uint8_t* irCmd) {
 	for(uint8_t n = 0; n < 2; n++) {
 		for (uint8_t i = 0; i < sizeof(irCmd)/sizeof(irCmd[0]); i++) {
-			for (uint8_t j = 0; j < sizeof(irCmd[0]); j++) {
+			for (uint8_t j = 0; j < sizeof(irCmd[0]) * 8; j++) {
 				if (irCmd[i] & (1 << (7 - j))) {
 					ledIrOn();
-					_delay_us(625);
+					_delay_us(2050);
 				}
 				else {
 					ledIrOff();
-					_delay_us(625);
+					_delay_us(2050);
 				}
 			}
 		}
-		_delay_ms(25);
+		ledIrOff();
+		_delay_ms(82);
 	}
 }
 

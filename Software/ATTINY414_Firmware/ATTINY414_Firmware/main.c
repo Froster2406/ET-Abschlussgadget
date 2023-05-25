@@ -28,15 +28,6 @@ int main(void)
 	led5Init();
 	ledIrInit();
 	
-	// Set up frequency generator output
-	TCA0.SINGLE.CTRLB = 0b00000001;
-	// Set top value for 38kHz square wave
-	TCA0.SINGLE.CMP0 = 42;
-	// Set PTB2 as output
-	PORTB.DIRSET = 0b001;
-	// Enable tca0
-	TCA0.SINGLE.CTRLA = 0b1;
-	
 	// Initialize touch lib
 	tinytouch_init();
 	bias = 32000;
