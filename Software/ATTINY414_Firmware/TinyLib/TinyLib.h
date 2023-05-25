@@ -1,6 +1,12 @@
 #ifndef TINY_LIB
 #define TINY_LIB
 
+#define F_CPU (1000000)
+
+#include <avr/io.h>
+#include <util/delay.h>
+#include <stdint.h>
+
 // Set led Ir pin as output
 void ledIrInit() {
 	PORTB.DIRSET = 0b0100;
@@ -114,6 +120,62 @@ void sendIrCommand(uint8_t* irCmd) {
 		}
 		_delay_ms(25);
 	}
+}
+
+// Output char on PB0 (J1)
+void printChar(uint8_t value)
+{
+	// Configure pin as output
+	PORTB.DIRSET = 0b1;
+	
+	// Start bit
+	PORTB.OUTCLR = 0b1;
+	_delay_us(319);
+	
+	for(uint8_t i = 0; i < 8; i++){
+		if((value >> i) & 1) {
+			// Toggle pin ON / HIGH
+			PORTB.OUTSET = 0b1;
+		}
+		else {
+			// Toggle pin OFF / LOW
+			PORTB.OUTCLR = 0b1;
+		}
+		_delay_us(319);
+	}
+	
+	// Stop bit
+	PORTB.OUTSET = 0b1;
+	_delay_us(319);
+	
+	// Idle
+	PORTB.OUTSET = 0b1;
+}
+
+// Output uint16 as ascii chars on PB0 (J1)
+void serialPrint(uint16_t val) {
+	char buf[8 * sizeof(uint16_t) + 1];
+	char *str = &buf[sizeof(buf) - 1];
+
+	*str = '\0';
+	
+	if (val < 0) {
+		printChar('-');
+	}
+	
+	uint8_t len = 0;
+	do {
+		char c = val % 10;
+		val /= 10;
+
+		*--str = c + '0';
+		len++;
+	} while(val);
+	
+	for (uint8_t i = 0; i < len; i++) {
+		printChar(str[i]);
+	}
+	printChar('\n');
 }
 
 #endif

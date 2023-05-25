@@ -23,7 +23,7 @@ void	tinytouch_init(void) {
 	// Enable ADC, 8-Bit resolution
 	ADC0.CTRLA = 0b00000101;
 	// VDD reference, set prescaler to 64
-	ADC0.CTRLC = 0b01010101;
+	ADC0.CTRLC = 0b00010101;
 }
 
 uint8_t tinytouch_adc(void) {	
@@ -41,7 +41,7 @@ uint8_t tinytouch_adc(void) {
 	PORTA.OUTCLR = 1 << tt_sensepin;
 	PORTA.DIRSET = 1 << tt_sensepin;
 	
-	_delay_us(32);
+	_delay_us(100);
 
 	// float pad input
 	PORTA.DIRCLR = 1 << tt_sensepin;
@@ -64,7 +64,7 @@ uint8_t tinytouch_adc(void) {
 	PORTA.OUTSET = 1 << tt_sensepin;
 	PORTA.DIRSET = 1 << tt_sensepin;
 	
-	_delay_us(32);
+	_delay_us(100);
 
 	// float pad input
 	PORTA.DIRCLR = 1 << tt_sensepin;
