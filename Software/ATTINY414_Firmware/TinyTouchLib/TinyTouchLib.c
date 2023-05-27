@@ -35,8 +35,8 @@ uint8_t tinytouch_adc(void) {
 	// Connect S/H cap to empty pin (PTB1)
 	ADC0.MUXPOS = 10;
 	// Charge S/H Cap 
-	PORTB.OUTSET = 1 << 1;
-	PORTB.DIRSET = 1 << 1;
+	PORTA.OUTSET = 1 << tt_refpin;
+	PORTA.DIRSET = 1 << tt_refpin;
 	// Discharge Pad
 	PORTA.OUTCLR = 1 << tt_sensepin;
 	PORTA.DIRSET = 1 << tt_sensepin;

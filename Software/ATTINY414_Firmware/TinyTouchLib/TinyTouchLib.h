@@ -36,8 +36,8 @@ enum {
 
 #define tt_refpin 2		// Use PA2 as reference pin
 #define tt_refadc 2		// Use ADC2 as reference ADC input
-#define tt_sensepin 1	// Use PA1 as sense pin
-#define tt_senseadc 1	// Use ADC1 as sense ADC input
+#define tt_sensepin 3	// Use PA1 as sense pin
+#define tt_senseadc 3	// Use ADC1 as sense ADC input
 
 //////////////////////////////////////////////////////////////////////////
 //
