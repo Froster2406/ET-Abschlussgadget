@@ -112,9 +112,9 @@ void ledsOff() {
 
 // Send command over ir led
 void sendIrCommand(uint8_t* irCmd) {
-	for(uint8_t n = 0; n < 2; n++) {
-		for (uint8_t i = 0; i < sizeof(irCmd)/sizeof(irCmd[0]); i++) {
-			for (uint8_t j = 0; j < sizeof(irCmd[0]) * 8; j++) {
+	for(uint8_t n = 0; n < 20; n++) {
+		for (uint8_t i = 0; i < 5; i++) {
+			for (uint8_t j = 0; j < 8; j++) {
 				if (irCmd[i] & (1 << (7 - j))) {
 					ledIrOn();
 					_delay_us(2050);
