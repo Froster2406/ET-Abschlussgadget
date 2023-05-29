@@ -83,32 +83,37 @@ if __name__ == '__main__':
     transport = ToolSerialConnection(serialport=com_port, baudrate=baudrate, timeout=0.05)
     backend = Backend()
     backend.connect_to_tool(transport)
-
-    try:
-        # Connect to mcu
-        backend.start_session(sessionconfig)
-    except Exception as e:
-        print(e)
-        if 'FileNotFoundError' in str(e):
-            sys.stderr.write(f"Serial port {com_port} does not exist")
-            print_com_ports()
-            sys.exit(1)
-        if 'PermissionError' in str(e):
-            sys.stderr.write(f"Serial port {com_port} might be used by another application")
-            sys.exit(1)
-    else:
-        # Print device id
-        device_id = backend.read_device_id()
-        print("Device ID is {0:06X}".format(int.from_bytes(device_id, byteorder="little")))
-
-        # Erase memory
-        backend.erase()
-
-        # Write firmware
-        backend.write_hex_to_target(str(firmware_file))
-
-        # Verify firmware
-        if backend.verify_hex(str(firmware_file)):
-            print("Programming was successful!")
+    
+    
+    while True:
+        print("Press ENTER to program device...")
+        input()
+    
+        try:
+            # Connect to mcu
+            backend.start_session(sessionconfig)
+        except Exception as e:
+            print(e)
+            if 'FileNotFoundError' in str(e):
+                sys.stderr.write(f"Serial port {com_port} does not exist")
+                print_com_ports()
+                sys.exit(1)
+            if 'PermissionError' in str(e):
+                sys.stderr.write(f"Serial port {com_port} might be used by another application")
+                sys.exit(1)
         else:
-            sys.stderr.write("Verification found errors!")
+            # Print device id
+            device_id = backend.read_device_id()
+            print("Device ID is {0:06X}".format(int.from_bytes(device_id, byteorder="little")))
+
+            # Erase memory
+            backend.erase()
+
+            # Write firmware
+            backend.write_hex_to_target(str(firmware_file))
+
+            # Verify firmware
+            if backend.verify_hex(str(firmware_file)):
+                print("Programming was successful!")
+            else:
+                sys.stderr.write("Verification found errors!")
